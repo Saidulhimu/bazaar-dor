@@ -5,7 +5,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession, signOut } from "@/lib/auth-client";
 import toast from "react-hot-toast";
-import { getBanglaDate, type Category } from "@/lib/utils";
+import { type Category } from "@/lib/utils";
+import BanglaDate from "./BanglaDate";
 import PriceTicker from "./PriceTicker";
 
 export default function Navbar() {
@@ -47,7 +48,7 @@ export default function Navbar() {
           <span className="text-xl font-bold text-green-700">
             🛒 বাজার দর
           </span>
-          <span className="text-xs text-gray-500">{getBanglaDate()}</span>
+          <BanglaDate className="text-xs text-gray-500" />
         </Link>
 
         <div className="hidden lg:flex items-center gap-3">
