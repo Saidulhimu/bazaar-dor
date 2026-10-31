@@ -28,7 +28,7 @@ export default function RootLayout({
       <body className={`${hindSiliguri.className} antialiased bg-gray-50`}>
 
         <div className="container mx-auto max-w-6xl ">
-          <Suspense fallback={<div className="h-[120px] bg-white border-b border-gray-100" />}>
+          <Suspense fallback={<div className="h-30 bg-white border-b border-gray-100" />}>
             <Navbar />
           </Suspense>
           <main className="min-h-screen">{children}</main>
