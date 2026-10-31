@@ -4,9 +4,9 @@ import BanglaDate from "./BanglaDate";
 
 export default function Hero() {
     return (
-        <section className="bg-gradient-to-r from-green-50 to-green-100">
+        <section className="bg-gradient-to-r from-green-50 to-green-100 container mx-auto">
             <div className="max-w-7xl mx-auto px-4 py-12 flex flex-col lg:flex-row items-center gap-8">
-                \        <div className="flex-1 text-center lg:text-left">
+                   <div className="flex-1 text-center lg:text-left">
                     <span className="inline-block bg-white text-green-700 text-sm px-3 py-1 rounded-full shadow-sm mb-4">
                         📅 <BanglaDate />
                     </span>
