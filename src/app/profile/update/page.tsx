@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { useSession, authClient } from "@/lib/auth-client";
 import toast from "react-hot-toast";
 
@@ -47,9 +48,12 @@ export default function UpdateProfilePage() {
       <div className="card bg-white shadow-sm border border-gray-100 overflow-hidden mb-4">
         <div className="h-24 bg-gray-200"></div>
         <div className="card-body flex-row items-center gap-3 -mt-2">
-          <img
+          <Image
             src={avatarUrl}
             alt={session.user.name || "User"}
+            width={64}
+            height={64}
+            unoptimized
             className="w-16 h-16 rounded-full border-4 border-white shadow"
           />
           <div>
