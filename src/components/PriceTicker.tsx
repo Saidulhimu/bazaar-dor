@@ -27,11 +27,11 @@ export default function PriceTicker() {
 
   return (
     <div className="bg-gray-50 border-t border-b border-gray-100 overflow-hidden py-2">
-      <div className="flex animate-marquee whitespace-nowrap">
+      <div className="flex animate-marquee whitespace-nowrap pl-4">
         {tickerItems.map((product, index) => (
           <div
             key={`${product.id}-${index}`}
-            className="flex items-center gap-1.5 mx-4 text-sm"
+            className="flex items-center gap-1.5 mr-6 text-sm"
           >
             <span>{product.image}</span>
             <span className="font-medium text-gray-700">{product.nameBn}</span>

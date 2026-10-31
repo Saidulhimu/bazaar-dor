@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useSession, signOut } from "@/lib/auth-client";
 import toast from "react-hot-toast";
 import { type Category } from "@/lib/utils";
@@ -13,7 +13,6 @@ export default function Navbar() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
-  const router = useRouter();
   const { data: session, isPending } = useSession();
 
   useEffect(() => {
@@ -36,7 +35,7 @@ export default function Navbar() {
       fetchOptions: {
         onSuccess: () => {
           toast.success("সাইন আউট সফল!");
-          router.push("/");
+          window.location.href = "/";
         },
       },
     });
@@ -62,7 +61,7 @@ export default function Navbar() {
           </span>
         </Link>
 
-        <div className="hidden lg:flex items-center gap-3">
+        <div className="hidden lg:flex items-center gap-3 ">
           {isPending ? (
             <span className="loading loading-spinner loading-sm"></span>
           ) : session ? (
