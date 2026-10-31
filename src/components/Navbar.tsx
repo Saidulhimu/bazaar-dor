@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useSession, signOut } from "@/lib/auth-client";
 import toast from "react-hot-toast";
 import { getBanglaDate, type Category } from "@/lib/utils";
+import PriceTicker from "./PriceTicker";
 
 export default function Navbar() {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -142,6 +143,7 @@ export default function Navbar() {
           </div>
         </div>
       )}
+      <PriceTicker />
     </header>
   );
 }
