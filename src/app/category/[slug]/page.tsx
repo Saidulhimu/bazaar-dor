@@ -59,13 +59,14 @@ export default function CategoryPage() {
     return 0;
   });
 
+  // Loading state
   if (loading) {
     return (
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="skeleton h-8 w-48 mb-6"></div>
+      <div className="max-w-7xl mx-auto py-8">
+        <div className="skeleton h-20 w-full mb-6 rounded-lg"></div>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
           {[...Array(8)].map((_, i) => (
-            <div key={i} className="skeleton h-40 w-full"></div>
+            <div key={i} className="skeleton h-28 w-full"></div>
           ))}
         </div>
       </div>
@@ -74,7 +75,7 @@ export default function CategoryPage() {
 
   if (error || !category || products.length === 0) {
     return (
-      <div className="max-w-7xl mx-auto px-4 py-16 text-center">
+      <div className="max-w-7xl mx-auto py-16 text-center">
         <p className="text-5xl mb-4">🔍</p>
         <h2 className="text-xl font-bold text-gray-900 mb-2">
           কোনো পণ্য পাওয়া যায়নি
@@ -87,14 +88,25 @@ export default function CategoryPage() {
     );
   }
 
+  // Success state
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
-      <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
-        <h1 className="text-2xl font-bold text-gray-900">
-          {category.icon} {category.nameBn}
-        </h1>
+    <div className="max-w-7xl mx-auto py-8">
+      <div className="card bg-white border border-gray-100 shadow-sm mb-4">
+        <div className="card-body p-5">
+          <h1 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+            <span className="text-2xl">{category.icon}</span> {category.nameBn}
+          </h1>
+          <p className="text-sm text-gray-500 mt-1">
+            এই ক্যাটাগরির সব পণ্যের তালিকা ও আজকের দাম
+          </p>
+        </div>
+      </div>
+
+      <div className="flex justify-end items-center gap-2 mb-4">
+        <span className="text-sm text-gray-500">সাজান</span>
         <SortDropdown sortBy={sortBy} onSortChange={setSortBy} />
       </div>
+
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
         {sortedProducts.map((product) => (
           <ProductCard key={product.id} product={product} />

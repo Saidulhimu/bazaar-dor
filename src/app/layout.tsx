@@ -23,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="bn" data-theme="light">
-      <body className={`${hindSiliguri.className} antialiased`}>
+      <body className={`${hindSiliguri.className} antialiased bg-gray-50`}>
         <Suspense fallback={<div className="h-[120px] bg-white border-b border-gray-100" />}>
           <Navbar />
         </Suspense>

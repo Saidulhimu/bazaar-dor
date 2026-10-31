@@ -18,21 +18,23 @@ export default function ProductCard({ product }: { product: Product }) {
       className="card bg-white shadow-sm hover:shadow-md transition border border-gray-100"
     >
       <div className="card-body p-4">
-        <div className="text-4xl text-center mb-2">{product.image}</div>
-        <h3 className="font-semibold text-gray-900 text-center">
-          {product.nameBn}
-        </h3>
-        <p className="text-xs text-gray-500 text-center">
-          {getUnitBn(product.unit)}
-        </p>
-        <div className="flex items-center justify-between mt-3">
+        <div className="flex items-center gap-3">
+          <span className="text-3xl shrink-0">{product.image}</span>
+          <div className="min-w-0">
+            <h3 className="font-semibold text-gray-900 truncate">
+              {product.nameBn}
+            </h3>
+            <p className="text-xs text-gray-500">{getUnitBn(product.unit)}</p>
+          </div>
+        </div>
+        <div className="flex items-end justify-between mt-3">
           <div>
             <p className="text-xs text-gray-400">আজকের দাম</p>
             <p className="font-bold text-gray-900">
               {formatPrice(product.today)} টাকা
             </p>
           </div>
-          <span className={`badge ${badgeClass}`}>
+          <span className={`badge ${badgeClass} gap-1`}>
             {arrow} {product.change.pct}%
           </span>
         </div>

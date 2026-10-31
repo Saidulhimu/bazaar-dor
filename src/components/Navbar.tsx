@@ -42,14 +42,24 @@ export default function Navbar() {
     });
   };
 
+  const avatarUrl = session
+    ? session.user.image ||
+      `https://api.dicebear.com/9.x/initials/svg?seed=${encodeURIComponent(
+        session.user.name || session.user.email
+      )}&backgroundColor=16a34a`
+    : "";
+
   return (
     <header className="sticky top-0 z-50 bg-white shadow-sm">
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-        <Link href="/" className="flex flex-col">
-          <span className="text-xl font-bold text-green-700">
-            🛒 বাজার দর
+        <Link href="/" className="flex items-center gap-2">
+          <span className="bg-green-600 text-white rounded-lg w-8 h-8 flex items-center justify-center text-lg">
+            🛒
           </span>
-          <BanglaDate className="text-xs text-gray-500" />
+          <span className="flex flex-col">
+            <span className="text-lg font-bold text-gray-900">বাজার দর</span>
+            <BanglaDate className="text-xs text-gray-400" />
+          </span>
         </Link>
 
         <div className="hidden lg:flex items-center gap-3">
@@ -57,15 +67,31 @@ export default function Navbar() {
             <span className="loading loading-spinner loading-sm"></span>
           ) : session ? (
             <div className="dropdown dropdown-end">
-              <div tabIndex={0} role="button" className="btn btn-ghost">
-                {session.user.name || "প্রোফাইল"}
+              <div tabIndex={0} role="button" className="btn btn-ghost gap-2 px-2">
+                <img src={avatarUrl} alt="" className="w-7 h-7 rounded-full" />
+                <span className="font-medium text-gray-700">
+                  {session.user.name?.split(" ")[0] || "প্রোফাইল"}
+                </span>
+                <span className="text-xs text-gray-400">▾</span>
               </div>
-              <ul className="dropdown-content menu bg-white rounded-box z-10 w-48 p-2 shadow-lg border">
-                <li>
-                  <Link href="/profile">প্রোফাইল</Link>
+              <ul className="dropdown-content menu bg-white rounded-box z-10 w-56 p-2 shadow-lg border mt-2">
+                <li className="px-3 py-2 border-b border-gray-50 mb-1 pointer-events-none">
+                  <div className="flex flex-col items-start">
+                    <span className="font-semibold text-gray-900">
+                      {session.user.name}
+                    </span>
+                    <span className="text-xs text-gray-400">
+                      {session.user.email}
+                    </span>
+                  </div>
                 </li>
                 <li>
-                  <button onClick={handleSignOut}>সাইন আউট</button>
+                  <Link href="/profile">👤 আমার প্রোফাইল</Link>
+                </li>
+                <li>
+                  <button onClick={handleSignOut} className="text-red-600">
+                    ↪ সাইন আউট
+                  </button>
                 </li>
               </ul>
             </div>
@@ -90,16 +116,16 @@ export default function Navbar() {
       </div>
 
       <nav className="hidden lg:block border-t border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 flex items-center gap-4 overflow-x-auto py-2">
+        <div className="max-w-7xl mx-auto px-4 flex items-center gap-2 overflow-x-auto py-2">
           {categories.map((cat) => {
             const isActive = pathname === `/category/${cat.slug}`;
             return (
               <Link
                 key={cat.id}
                 href={`/category/${cat.slug}`}
-                className={`text-sm whitespace-nowrap px-3 py-1 rounded-full transition ${
+                className={`text-sm whitespace-nowrap px-3 py-1.5 rounded-full transition ${
                   isActive
-                    ? "bg-green-100 text-green-700 font-semibold"
+                    ? "bg-green-600 text-white font-semibold"
                     : "text-gray-600 hover:bg-gray-100"
                 }`}
               >
@@ -112,23 +138,31 @@ export default function Navbar() {
 
       {mobileMenuOpen && (
         <div className="lg:hidden border-t border-gray-100 px-4 py-3 space-y-2">
-          {categories.map((cat) => (
-            <Link
-              key={cat.id}
-              href={`/category/${cat.slug}`}
-              className="block text-sm text-gray-700 py-1"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              {cat.icon} {cat.nameBn}
-            </Link>
-          ))}
+          {categories.map((cat) => {
+            const isActive = pathname === `/category/${cat.slug}`;
+            return (
+              <Link
+                key={cat.id}
+                href={`/category/${cat.slug}`}
+                className={`block text-sm py-1.5 px-2 rounded-lg ${
+                  isActive ? "bg-green-600 text-white" : "text-gray-700"
+                }`}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {cat.icon} {cat.nameBn}
+              </Link>
+            );
+          })}
           <div className="pt-2 border-t border-gray-100 flex gap-2">
             {session ? (
               <>
                 <Link href="/profile" className="btn btn-ghost btn-sm flex-1">
                   প্রোফাইল
                 </Link>
-                <button onClick={handleSignOut} className="btn btn-sm flex-1">
+                <button
+                  onClick={handleSignOut}
+                  className="btn btn-sm flex-1 text-red-600"
+                >
                   সাইন আউট
                 </button>
               </>
@@ -137,7 +171,10 @@ export default function Navbar() {
                 <Link href="/signin" className="btn btn-ghost btn-sm flex-1">
                   সাইন ইন
                 </Link>
-                <Link href="/signup" className="btn btn-success btn-sm flex-1 text-white">
+                <Link
+                  href="/signup"
+                  className="btn btn-success btn-sm flex-1 text-white"
+                >
                   সাইন আপ
                 </Link>
               </>
@@ -145,6 +182,7 @@ export default function Navbar() {
           </div>
         </div>
       )}
+
       <PriceTicker />
     </header>
   );

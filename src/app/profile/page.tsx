@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useSession } from "@/lib/auth-client";
 
 export default function ProfilePage() {
@@ -8,7 +9,7 @@ export default function ProfilePage() {
 
   if (isPending) {
     return (
-      <div className="max-w-md mx-auto px-4 py-16 text-center">
+      <div className="max-w-2xl mx-auto py-16 text-center">
         <span className="loading loading-spinner loading-lg"></span>
       </div>
     );
@@ -16,7 +17,7 @@ export default function ProfilePage() {
 
   if (!session) {
     return (
-      <div className="max-w-md mx-auto px-4 py-16 text-center">
+      <div className="max-w-md mx-auto py-16 text-center">
         <p className="text-gray-600 mb-4">আপনি লগইন করেননি।</p>
         <Link href="/signin" className="btn btn-success text-white">
           সাইন ইন করুন
@@ -25,33 +26,42 @@ export default function ProfilePage() {
     );
   }
 
-  // ৩. Session আছে
+  const avatarUrl =
+    session.user.image ||
+    `https://api.dicebear.com/9.x/initials/svg?seed=${encodeURIComponent(
+      session.user.name || session.user.email
+    )}&backgroundColor=16a34a`;
+
   return (
-    <div className="max-w-md mx-auto px-4 py-12">
-      <div className="card bg-white shadow-md border border-gray-100">
-        <div className="card-body items-center text-center">
-          {session.user.image ? (
-            <img
-              src={session.user.image}
-              alt={session.user.name}
-              className="w-20 h-20 rounded-full"
+    <div className="max-w-2xl mx-auto py-8">
+      <h1 className="text-xl font-bold text-gray-900 mb-1">আমার প্রোফাইল</h1>
+      <p className="text-sm text-gray-500 mb-4">
+        আপনার অ্যাকাউন্টের তথ্য এখানে দেখুন
+      </p>
+
+      <div className="card bg-white shadow-sm border border-gray-100 overflow-hidden">
+        <div className="h-24 bg-gray-200"></div>
+
+        <div className="card-body flex-row items-center justify-between flex-wrap gap-3 -mt-2">
+          <div className="flex items-center gap-3">
+            <Image
+              src={avatarUrl}
+              alt={session.user.name || "User"}
+              width={64}
+              height={64}
+              unoptimized
+              className="w-16 h-16 rounded-full border-4 border-white shadow"
             />
-          ) : (
-            <div className="w-20 h-20 rounded-full bg-green-100 text-green-700 text-3xl font-bold flex items-center justify-center">
-              {session.user.name?.charAt(0) || "U"}
+            <div>
+              <p className="font-semibold text-gray-900">{session.user.name}</p>
+              <p className="text-sm text-gray-500">{session.user.email}</p>
             </div>
-          )}
-
-          <h1 className="text-xl font-bold text-gray-900 mt-4">
-            {session.user.name}
-          </h1>
-          <p className="text-gray-500 text-sm">{session.user.email}</p>
-
+          </div>
           <Link
             href="/profile/update"
-            className="btn btn-success text-white mt-6 w-full"
+            className="btn btn-sm bg-red-50 text-red-600 border-red-100 hover:bg-red-100"
           >
-            তথ্য আপডেট করুন
+            ✏️ প্রোফাইল এডিট
           </Link>
         </div>
       </div>
